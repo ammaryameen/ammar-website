@@ -1,0 +1,392 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>i'm ammar.com</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,800&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #fffff3;
+    --surface: #b9dddb;
+    --ink: #121a22;
+    --muted: #696364;
+    --line: #e1e4c8;
+    --accent: #14978cd8;
+    --accent-ink: #fcfcfc;
+    --head: "Bricolage Grotesque", "Segoe UI", Arial, sans-serif;
+    --body: "DM Sans", "Segoe UI", Arial, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #1f2335; --surface: #17202a; --ink: #fafafa; --muted: #9aa8b5;
+      --line: #2a3643; --accent: #6f94ff; --accent-ink: #0f151b;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0f151b; --surface: #17202a; --ink: #eef2f6; --muted: #9aa8b5;
+    --line: #2a3643; --accent: #6f94ff; --accent-ink: #0f151b;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font-family: var(--body); font-size: 1.05rem; line-height: 1.65;
+  }
+  a { color: inherit; }
+  :focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+  .wrap { max-width: 1000px; margin: 0 auto; padding: 0 24px; }
+  h1, h2, h3 { font-family: var(--head); line-height: 1.1; margin: 0; }
+  h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin-bottom: 28px; }
+  p { max-width: 62ch; margin: 0 0 1em; }
+
+  /* Header */
+  header {
+    position: sticky; top: 0; z-index: 10; background: var(--bg);
+    border-bottom: 1px solid var(--line);
+  }
+  nav { display: flex; align-items: center; justify-content: space-between; height: 64px; gap: 12px; }
+  .logo { font-family: var(--head); font-weight: 800; font-size: 1.25rem; text-decoration: none; }
+  .links { display: flex; gap: 22px; align-items: center; }
+  .links a { text-decoration: none; color: var(--muted); font-weight: 500; font-size: .95rem; }
+  .links a:hover, .links a.active { color: var(--ink); }
+  .links a.active { text-decoration: underline; text-decoration-color: var(--accent); text-decoration-thickness: 3px; text-underline-offset: 8px; }
+  #themeBtn {
+    background: none; border: 1px solid var(--line); color: var(--ink);
+    border-radius: 999px; padding: 6px 14px; font: inherit; font-size: .9rem; cursor: pointer;
+  }
+  #themeBtn:hover { border-color: var(--accent); }
+  @media (max-width: 720px) { .links a { display: none; } }
+
+  /* Hero: the viewfinder */
+  .hero { padding: 72px 0 64px; }
+  .finder {
+    position: relative; padding: 56px 40px; max-width: 880px;
+  }
+  .finder i { position: absolute; width: 34px; height: 34px; border: 0 solid var(--ink); }
+  .finder i:nth-child(1) { top: 0; left: 0; border-top-width: 4px; border-left-width: 4px; }
+  .finder i:nth-child(2) { top: 0; right: 0; border-top-width: 4px; border-right-width: 4px; }
+  .finder i:nth-child(3) { bottom: 0; left: 0; border-bottom-width: 4px; border-left-width: 4px; }
+  .finder i:nth-child(4) { bottom: 0; right: 0; border-bottom-width: 4px; border-right-width: 4px; }
+  .rec { display: flex; align-items: center; gap: 10px; color: var(--muted); font-size: .95rem; margin-bottom: 18px; }
+  .rec b { width: 12px; height: 12px; border-radius: 50%; background: #e5372d; animation: blink 1.4s steps(1) infinite; }
+  @keyframes blink { 50% { opacity: 0; } }
+  .hero h1 { font-size: clamp(3rem, 12vw, 6.5rem); font-weight: 800; letter-spacing: -0.03em; }
+  .role { font-family: var(--head); font-size: clamp(1.2rem, 3vw, 1.7rem); font-weight: 500; margin: 14px 0 20px; min-height: 1.4em; }
+  .role span { border-right: 3px solid var(--accent); padding-right: 4px; }
+  .btns { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 24px; }
+  .btn {
+    display: inline-block; padding: 12px 22px; border-radius: 8px; text-decoration: none;
+    font-weight: 500; border: 2px solid var(--ink);
+  }
+  .btn.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+  .btn:hover { transform: translateY(-2px); }
+  .btn { transition: transform .15s; }
+
+  section { padding: 64px 0; border-top: 1px solid var(--line); }
+
+  /* Stats */
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 0; border: 1px solid var(--line); background: var(--surface); }
+  .stat { padding: 26px 22px; border-right: 1px solid var(--line); }
+  .stat:last-child { border-right: 0; }
+  .stat strong { display: block; font-family: var(--head); font-size: 3rem; font-weight: 800; line-height: 1; color: var(--accent); }
+  .stat span { color: var(--muted); font-size: .95rem; }
+  @media (max-width: 640px) { .stat { border-right: 0; border-bottom: 1px solid var(--line); } .stat:last-child { border-bottom: 0; } }
+
+  /* About */
+  .two { display: grid; grid-template-columns: 1.4fr 1fr; gap: 48px; }
+  @media (max-width: 800px) { .two { grid-template-columns: 1fr; gap: 24px; } }
+  .facts { list-style: none; margin: 0; padding: 0; }
+  .facts li { padding: 14px 0; border-bottom: 1px solid var(--line); display: flex; justify-content: space-between; gap: 16px; }
+  .facts li:first-child { border-top: 1px solid var(--line); }
+  .facts span { color: var(--muted); }
+  .facts b { text-align: right; font-weight: 500; }
+
+  /* What I do */
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 20px; }
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 26px; }
+  .card h3 { font-size: 1.35rem; margin-bottom: 8px; }
+  .card p { color: var(--muted); margin: 0; }
+  .tag { display: inline-block; font-weight: 500; color: var(--accent); margin-bottom: 8px; }
+  .sub { font-size: 1.2rem; margin: 32px 0 14px; }
+  .handle { color: var(--muted); }
+  .chip .handle { margin-left: 6px; font-weight: 400; }
+
+  /* Travel tabs */
+  .tabs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
+  .tab {
+    border: 2px solid var(--line); background: var(--surface); color: var(--ink);
+    padding: 10px 18px; border-radius: 999px; font: inherit; font-weight: 500; cursor: pointer;
+  }
+  .tab[aria-selected="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+  .panel { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 28px; max-width: 720px; }
+  .panel h3 { font-size: 1.6rem; margin-bottom: 4px; }
+  .panel .when { color: var(--muted); margin-bottom: 12px; }
+  .panel p:last-child { margin-bottom: 0; }
+
+  /* Platforms */
+  .chips { display: flex; flex-wrap: wrap; gap: 10px; }
+  .chip { border: 1px solid var(--line); background: var(--surface); padding: 8px 18px; border-radius: 999px; text-decoration: none; font-weight: 500; }
+  .chip:hover { border-color: var(--accent); color: var(--accent); }
+
+  footer { border-top: 1px solid var(--line); padding: 32px 0 48px; color: var(--muted); font-size: .95rem; }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .rec b { animation: none; }
+    .btn { transition: none; }
+  }
+
+  /* Phone screens */
+@media (max-width: 720px) {
+  nav { height: auto; flex-wrap: wrap; padding: 10px 0; }
+  .links { width: 100%; overflow-x: auto; gap: 18px; padding-bottom: 4px; white-space: nowrap; }
+  .links a { display: inline-block; flex: none; }
+  #themeBtn { flex: none; }
+}
+@media (max-width: 600px) {
+  body { font-size: 1rem; }
+  .wrap { padding: 0 18px; }
+  .hero { padding: 36px 0 40px; }
+  .finder { padding: 36px 20px; }
+  .finder i { width: 24px; height: 24px; }
+  section { padding: 44px 0; }
+  .stat strong { font-size: 2.4rem; }
+  .card, .panel { padding: 20px; }
+  .btns .btn { flex: 1 1 100%; text-align: center; }
+  .facts li { flex-direction: column; gap: 2px; }
+  .facts b { text-align: left; }
+}
+
+/* Laptop and big screens */
+@media (min-width: 1200px) {
+  .wrap { max-width: 1160px; }
+  body { font-size: 1.1rem; }
+}
+
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <nav aria-label="Main">
+      <a class="logo" href="#top">Ammar</a>
+      <div class="links">
+        <a href="#about">About</a>
+        <a href="#languages">Languages</a>
+        <a href="#work">What I do</a>
+        <a href="#style">Style</a>
+        <a href="#travel">Travel</a>
+        <a href="#next">Next</a>
+        <a href="#connect">Connect</a>
+        <button id="themeBtn" type="button" aria-label="Switch between light and dark mode">Dark mode</button>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <div class="wrap hero">
+    <div class="finder">
+      <i></i><i></i><i></i><i></i>
+      <div class="rec"><b></b> Recording from Karachi, Pakistan</div>
+      <h1>Ammar Jujara</h1>
+      <div class="role" aria-live="off"><span id="typed"></span></div>
+      <p>I’m 20 and I think of myself as an artist. I make videos for brands and my own YouTube channel, I love fashion and sneakers, and I’m studying computer science while teaching myself web development.</p>
+      <div class="btns">
+        <a class="btn primary" href="#about">Read my story</a>
+        <a class="btn" href="#connect">Find me online</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap" style="padding-bottom:64px">
+    <div class="stats">
+      <div class="stat"><strong data-count="20">0</strong><span>years old</span></div>
+      <div class="stat"><strong data-count="5" data-suffix="+">0</strong><span>years of photography and content creation</span></div>
+      <div class="stat"><strong data-count="3">0</strong><span>countries visited</span></div>
+      <div class="stat"><strong data-count="11">0</strong><span>years playing football</span></div>
+    </div>
+  </div>
+
+  <section id="about">
+    <div class="wrap two">
+      <div>
+        <h2>About me</h2>
+        <p>I finished my intermediate in 2024 and I’m now doing a bachelor’s degree in computer science. Alongside my studies, I work part-time as a content creator and photographer, and I’ve been doing it for around four to five years.</p>
+        <p>I work with brands and make videos for my YouTube channel. I shoot my videos and reels on my own phone. For client photography projects, the brand provides the camera and other gear, so I’ve learned to get good results from whatever equipment is in front of me.</p>
+        <p>Photography and content creation are how I express myself, so I see my work as art as much as a job. Fashion and sneakers are part of the same creative side.</p>
+        <p>I try to learn as much as I can, every day. That’s why I’m now working through my web development journey.</p>
+      </div>
+      <ul class="facts">
+        <li><span>Based in</span><b>Karachi, Pakistan</b></li>
+        <li><span>Studying</span><b>BS Computer Science</b></li>
+        <li><span>Intermediate</span><b>Completed 2024</b></li>
+        <li><span>Creating since</span><b>About 4 to 5 years</b></li>
+        <li><span>Football since</span><b>2015</b></li>
+        <li><span>Working out since</span><b>2024</b></li>
+        <li><span>Learning now</span><b>Web development, German</b></li>
+        <li><span>Languages</span><b>Urdu, English, German basics</b></li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="languages">
+    <div class="wrap">
+      <h2>Languages</h2>
+      <div class="grid">
+        <div class="card"><span class="tag">Mother tongue</span><h3>Urdu</h3><p>The language I grew up speaking in Karachi, and the one I think in.</p></div>
+        <div class="card"><span class="tag">IELTS, 6 bands</span><h3>English</h3><p>I completed the IELTS exam and scored 6 bands. I use English for my studies, my content and working with brands.</p></div>
+        <div class="card"><span class="tag">Learning the basics</span><h3>German</h3><p>I’m learning German step by step, which also fits with my plan to explore Europe.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="work">
+    <div class="wrap">
+      <h2>What I do</h2>
+      <div class="grid">
+        <div class="card"><h3>Photography</h3><p>Hands-on experience shooting for clients and brands, using the gear they provide.</p></div>
+        <div class="card"><h3>Content creation</h3><p>Videos and reels edited and made on my phone, plus vlogs and videos for my YouTube channel.</p></div>
+        <div class="card"><h3>Web development</h3><p>Building my skills alongside my computer science degree. This website is one of my projects.</p></div>
+        <div class="card"><h3>Football</h3><p>Playing since 2015. It keeps me active and teaches me teamwork.</p></div>
+        <div class="card"><h3>Fitness</h3><p>Working out regularly since 2024, building discipline that carries into everything else.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="style">
+    <div class="wrap">
+      <h2>Style and sneakers</h2>
+      <p>I’m a fashion enthusiast. My style is relaxed and oversized, and I like building outfits around my shoes.</p>
+      <h3 class="sub">My shoes</h3>
+      <div class="grid">
+        <div class="card"><h3>Adidas Samba</h3><p>A classic that goes with almost everything.</p></div>
+        <div class="card"><h3>Air Jordan 1</h3><p>Bold and iconic, the one that makes an outfit stand out.</p></div>
+        <div class="card"><h3>Onitsuka Tiger Mexico 66</h3><p>Slim, retro and clean.</p></div>
+      </div>
+      <h3 class="sub">What I wear</h3>
+      <div class="chips">
+        <span class="chip">Hoodies</span>
+        <span class="chip">Sweatshirts</span>
+        <span class="chip">Oversized T-shirts</span>
+        <span class="chip">Oversized fits</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="travel">
+    <div class="wrap">
+      <h2>Places I’ve been</h2>
+      <div class="tabs" role="tablist" aria-label="Countries visited">
+        <button class="tab" role="tab" aria-selected="true" data-i="0">Malaysia</button>
+        <button class="tab" role="tab" aria-selected="false" data-i="1">Saudi Arabia</button>
+        <button class="tab" role="tab" aria-selected="false" data-i="2">UAE</button>
+      </div>
+      <div class="panel" id="panel" role="tabpanel" aria-live="polite"></div>
+    </div>
+  </section>
+
+  <section id="next">
+    <div class="wrap">
+      <h2>What’s next</h2>
+      <div class="grid">
+        <div class="card"><h3>Exploring Europe</h3><p>I want to travel across Europe to see new places, meet people and create content along the way.</p></div>
+        <div class="card"><h3>Higher education</h3><p>After my bachelor’s degree, I plan to continue my studies and keep building my skills.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="connect">
+    <div class="wrap">
+      <h2>Find me online</h2>
+      <p>You can find me on</p>
+      <strong>SOCIAL MEDIA</strong> 
+        <a class="chip" href="https://www.instagram.com/ammar_jujara" target="_blank" rel="noopener">Instagram <span class="https://www.instagram.com/ammar_jujara/"></span></a>
+        <a class="chip" href="https://www.youtube.com/results?search_query=Ammar+Jujara" target="_blank" rel="https://www.youtube.com/@ammarjujara">YouTube <span class="handle"></span></a>
+        <a class="chip" href="https://www.facebook.com/search/top?q=Ammar%20Jujara" target="_blank" rel="noopener">Facebook <span class="https://www.facebook.com/p/Ammar-Jujara-100076198960805/"></span></a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">© <span id="year"></span> Ammar Jujara</div>
+</footer>
+
+<script>
+  // Typing effect for the role line
+  const roles = ["Artist", "Computer Science student", "Future web developer"];
+  const typed = document.getElementById("typed");
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  let r = 0, c = 0, deleting = false;
+  function type() {
+    const word = roles[r];
+    typed.textContent = word.slice(0, c);
+    if (!deleting && c === word.length) { deleting = true; return setTimeout(type, 1400); }
+    if (deleting && c === 0) { deleting = false; r = (r + 1) % roles.length; }
+    c += deleting ? -1 : 1;
+    setTimeout(type, deleting ? 40 : 80);
+  }
+  if (reduce) typed.textContent = roles.join(", "); else type();
+
+  // Count-up numbers when they scroll into view
+  const counters = document.querySelectorAll("[data-count]");
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+      if (!e.isIntersecting) return;
+      const el = e.target, end = +el.dataset.count, suffix = el.dataset.suffix || "";
+      io.unobserve(el);
+      if (reduce) { el.textContent = end + suffix; return; }
+      let n = 0;
+      const step = setInterval(() => {
+        n++; el.textContent = n + (n === end ? suffix : "");
+        if (n >= end) clearInterval(step);
+      }, 900 / end);
+    });
+  }, { threshold: 0.6 });
+  counters.forEach((el) => io.observe(el));
+
+  // Travel tabs
+  const places = [
+    { name: "Malaysia", when: "2026", text: "My most recent trip. I spent time there learning about the country: how it’s laid out, the people, and the atmosphere. I also made vlogs while I was there." },
+    { name: "Saudi Arabia", when: "2015, with my family", text: "In 2015 I travelled to Saudi Arabia with my family to perform Hajj. It was a spiritual journey and one of the most meaningful experiences of my life, and it taught me patience, gratitude and the importance of faith and family." },
+    { name: "United Arab Emirates", when: "2006 to 2014, with my family", text: "I first visited the UAE in 2006 when I was just 2 months old, so travel has been part of my life since the very beginning. We went back during vacations over the years, usually staying for one or two months at a time, and my last trip there was in 2014. In the UAE we visited Dubai and Abu Dhabi. Those long family stays are where my love of exploring new places began." }
+  ];
+  const panel = document.getElementById("panel");
+  const tabs = document.querySelectorAll(".tab");
+  function show(i) {
+    const p = places[i];
+    panel.innerHTML = "<h3>" + p.name + "</h3><div class='when'>" + p.when + "</div><p>" + p.text + "</p>";
+    tabs.forEach((t, k) => t.setAttribute("aria-selected", k === i));
+  }
+  tabs.forEach((t) => t.addEventListener("click", () => show(+t.dataset.i)));
+  show(0);
+
+  // Highlight the nav link for the section on screen
+  const navLinks = document.querySelectorAll(".links a");
+  const sections = document.querySelectorAll("section");
+  const so = new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+      if (e.isIntersecting) navLinks.forEach((a) => a.classList.toggle("active", a.getAttribute("href") === "#" + e.target.id));
+    });
+  }, { rootMargin: "-40% 0px -55% 0px" });
+  sections.forEach((s) => so.observe(s));
+
+  // Light / dark toggle
+  const root = document.documentElement, btn = document.getElementById("themeBtn");
+  function isDark() {
+    const t = root.dataset.theme;
+    return t ? t === "dark" : window.matchMedia("(prefers-color-scheme: dark)").matches;
+  }
+  function label() { btn.textContent = isDark() ? "Light mode" : "Dark mode"; }
+  btn.addEventListener("click", () => { root.dataset.theme = isDark() ? "light" : "dark"; label(); });
+  label();
+
+  document.getElementById("year").textContent = new Date().getFullYear();
+</script>
+</body>
+</html> 
